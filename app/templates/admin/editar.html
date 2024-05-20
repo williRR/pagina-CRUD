@@ -1,0 +1,84 @@
+{%include 'admin/cabecera.html'%}
+
+<form action="/update/{{producto[0]}}" method="POST">
+      
+    <div class="mb-3">
+        <label for="" class="form-label">Codigo </label>
+        <input
+            type="text"
+            class="form-control"
+            name="codigo"
+            id="codigo"
+            value="{{producto[0]}}"
+            readonly
+        />
+    </div> 
+    
+    
+    
+    
+    <!-- PRODUCTO -->
+    <div class="mb-3">
+        <label for="" class="form-label">Producto</label>
+        <input
+            type="text"
+            class="form-control"
+            name="producto"
+            id="producto"
+            value="{{producto[1]}}"
+        />
+    </div>
+    
+    
+    
+    <!-- IMAGEN PRODUCTO  -->
+    <!-- <div class="mb-3">
+        <label for="" class="form-label">Imagen</label>
+        <input
+            type="file"
+            class="form-control"
+            name="imagen"
+            id="imagen"
+            value="{{producto[2]}}"
+        />
+    </div> -->
+    
+    
+    <!-- PRECIO  -->
+    <div class="mb-3">
+        <label for="" class="form-label">Precio </label>
+        <input
+            type="text"
+            class="form-control"
+            name="precio"
+            id="precio"
+            value="{{producto[3]}}"
+        />
+    </div>
+    
+    <!--  CANTIDAD-->
+    <div class="mb-3">
+        <label for="" class="form-label">Cantidad </label>
+        <input
+            type="text"
+            class="form-control"
+            name="cantidad"
+            id="cantidad"
+            value="{{producto[4]}}"
+        />
+    </div>
+    <button
+        type="submit"
+        class="btn btn-primary"
+    >
+        GUARDAR CAMBIOS
+    </button>
+    
+    
+    
+    </form>
+
+
+
+
+{%include 'admin/pie.html'%}

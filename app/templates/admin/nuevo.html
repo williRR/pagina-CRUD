@@ -1,0 +1,95 @@
+{%include 'admin/cabecera.html'%}
+
+
+
+
+<!-- CRUD  PARA AGREGAR PRODUCTOS
+
+-->
+
+<!-- CODIGO  -->
+<form action="/agregar_producto" method="POST">
+    <!--     
+    <div class="mb-3">
+        <label for="" class="form-label">Codigo </label>
+        <input
+            type="text"
+            class="form-control"
+            name="codigo"
+            id="codigo"
+            aria-describedby="helpId"
+            placeholder="Codigo producto"
+        />
+    </div> -->
+    
+    
+    
+    
+    <!-- PRODUCTO -->
+    <div class="mb-3">
+        <label for="" class="form-label">Producto</label>
+        <input
+            type="text"
+            class="form-control"
+            name="producto"
+            id="producto"
+            aria-describedby="helpId"
+            placeholder="nombre producto"
+        />
+    </div>
+    
+    
+    
+    <!-- IMAGEN PRODUCTO  -->
+    <!-- <div class="mb-3">
+        <label for="" class="form-label">Imagen</label>
+        <input
+            type="file"
+            class="form-control"
+            name="imagen"
+            id="imagen"
+            aria-describedby="helpId"
+            placeholder="seleccione imagen producto"
+        />
+    </div> -->
+    
+    
+    <!-- PRECIO  -->
+    <div class="mb-3">
+        <label for="" class="form-label">Precio </label>
+        <input
+            type="text"
+            class="form-control"
+            name="precio"
+            id="precio"
+            aria-describedby="helpId"
+            placeholder="Precio producto"
+        />
+    </div>
+    
+    <!--  CANTIDAD-->
+    <div class="mb-3">
+        <label for="" class="form-label">Cantidad </label>
+        <input
+            type="text"
+            class="form-control"
+            name="cantidad"
+            id="cantidad"
+            aria-describedby="helpId"
+            placeholder=" cantidad producto"
+        />
+    </div>
+    
+    <button
+        type="submit"
+        class="btn btn-primary"
+    >
+        ENVIAR
+    </button>
+    
+    
+    
+    </form>
+
+
+{%include 'admin/pie.html'%}

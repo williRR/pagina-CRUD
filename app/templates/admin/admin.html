@@ -1,0 +1,95 @@
+{%include 'admin/cabecera.html'%}
+
+<h1>Panel de Administración</h1>
+<br>
+<br>
+
+
+
+            
+<!-- mensaje de exito  -->
+
+
+
+{%  with messages = get_flashed_messages() %}
+{%if messages %}
+{%for message in messages %}
+<p>{{message}}</p>
+{%endfor%}
+{%endif%}
+
+{%endwith%}
+
+
+
+
+
+<!-- SEGUNDO CONTENEDOR MUESTA LOS PRODUCTO DE LA BD -->
+
+       
+<a
+                            href="/agregar_producto"
+                            class="btn btn-warning">
+                            AGREGAR</a>
+
+  
+    
+<!-- INCIO DE MI TABLA  -->
+        <table
+            class="table table-primary"
+        >
+            <thead>
+                <tr>
+                    <th scope="col">producto</th>
+                    
+                    <th scope="col">precio</th>
+                    <th scope="col">cantidad</th>
+                    <th scope="col">acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {%for producto in productos%}
+                <tr>
+
+                    <td> {{  producto[1] }} </td>
+                    
+                    <td> {{producto[3] }} </td>
+                    <td> {{producto[4]}} </td>
+                    <td>
+                        <a
+                            href="/editar_producto/{{producto[0]}}"
+                            class="btn btn-warning">
+                            Editar </a>
+                        <a
+                            href="/eliminar_producto/{{producto[0]}}"
+                            class="btn btn-danger">
+                            Eliminar </a>
+                
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+<!-- FIN DE MI TABLA  -->
+
+
+     
+
+
+
+
+
+
+{%include 'admin/pie.html'%}
+
+
+
+

@@ -1,0 +1,12 @@
+CREATE TABLE `tienda`.`producto` (
+  `codigo` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
+  `imagen` VARCHAR(255) NOT NULL,
+  `precio` DECIMAL(10,2) NOT NULL DEFAULT '0.01',
+  `cantidad` INT NOT NULL,
+  
+  PRIMARY KEY (`codigo`)
+) ENGINE = InnoDB;
+
+
+DROP TABLE producto;
