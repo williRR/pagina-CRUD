@@ -1,5 +1,8 @@
-from flask import Flask, render_template, request,url_for,redirect,flash
+from flask import Flask, render_template, request,url_for,redirect,flash,send_from_directory
 from flask_mysqldb import MySQL
+from datetime import datetime
+import os
+
 app = Flask(__name__)
 
 #CONEXION A LA BASE DE DATOS    
@@ -30,37 +33,42 @@ def administar():
     mysql.connection.commit()
     return render_template ('admin/admin.html', productos=data)
 
+# mostrar la imagen de los productos en la pagina de administracion
+@app.route('/img/<imagen>')
+def imagenes(imagen):
+    return send_from_directory(os.path.join('static/img'), imagen)
 
 
-#AGREGAR PRODUTOS 
+# AGREGAR PRODUCTOS 
 @app.route('/agregar_producto', methods=['GET','POST'])
 def agregar_p():
     if request.method == 'POST':
-   
-     producto=request.form['producto']
-     #imagen=request.form['imagen']
-     precio=request.form['precio']
-     cantidad=request.form['cantidad']  
-     
-    
-     #creamaos la conexion
-     cursor=mysql.connection.cursor()
-     # damos los valores a insertar
-     
-     
-     sql=('INSERT INTO producto (nombre,precio,cantidad) VALUES ( %s,%s,%s);' )    
-     datos=(producto,precio,cantidad)
-     cursor.execute('USE tienda')
-     cursor.execute(sql,datos)
-    #realizamos la insercion
-     mysql.connection.commit()
-     flash('Producto agregado correctamente')
-     return redirect(url_for('administar'))  # Redirige al usuario a la página de administración
-     
-    else:
-    
-        return render_template('admin/nuevo.html')
+        producto=request.form['producto']
+        imagen=request.files['imagen']
+        precio=request.form['precio']
+        cantidad=request.form['cantidad']  
+        
+        tiempo=datetime.now()
+        horaActual=tiempo.strftime('%Y%H%M%S')
+        nuevoNombre = None
 
+        if imagen.filename != "":
+            nuevoNombre=horaActual+"_"+imagen.filename
+            imagen.save('app/static/img/'+nuevoNombre)
+
+        # creamos la conexion
+        cursor=mysql.connection.cursor()
+        # damos los valores a insertar
+        sql=('INSERT INTO producto (nombre,imagen,precio,cantidad) VALUES ( %s,%s,%s,%s);' )    
+        datos=(producto,nuevoNombre,precio,cantidad)  # Guarda el nombre de la imagen, no el objeto de archivo
+        cursor.execute('USE tienda')
+        cursor.execute(sql,datos)
+        # realizamos la insercion
+        mysql.connection.commit()
+        flash('Producto agregado correctamente')
+        return redirect(url_for('administar'))  # Redirige al usuario a la página de administración
+    else:
+        return render_template('admin/nuevo.html')
 
 
 
@@ -81,9 +89,17 @@ def editar(codigo):
 def update(codigo):
     if request.method == 'POST':
         producto=request.form['producto']
-        #imagen=request.form['imagen']
+        imagen=request.files['imagen']
         precio=request.form['precio']
         cantidad=request.form['cantidad']
+        
+        tiempo=datetime.now()
+        horaActual=tiempo.strftime('%Y%H%M%S')
+        nuevoNombre = None
+
+        if imagen.filename != "":
+            nuevoNombre=horaActual+"_"+imagen.filename
+            imagen.save('app/static/img/'+nuevoNombre)
         
         #conexion a la base de datos
         cursor=mysql.connection.cursor()  
@@ -93,11 +109,12 @@ def update(codigo):
             UPDATE producto
             set 
             nombre=%s,
+            imagen=%s,
             precio=%s,
             cantidad=%s
             WHERE codigo=%s
             """
-        datos=(producto,precio,cantidad, codigo)
+        datos=(producto,nuevoNombre,precio,cantidad, codigo)
         cursor.execute(sql,datos)
         mysql.connection.commit()
     flash('Producto actualizado correctamente')
@@ -107,16 +124,27 @@ def update(codigo):
 
 
 
-# #ELIMINAR PRODUCTOS
+# ELIMINAR PRODUCTOS
 @app.route('/eliminar_producto/<string:codigo>')
 def eliminar(codigo):
-    
     cursor=mysql.connection.cursor()
     cursor.execute('USE tienda')
-    cursor.execute('DELETE FROM producto WHERE codigo={0}'.format(codigo,))
-    mysql.connection.commit()
+    
+    # Obtén la información del producto antes de eliminarlo
+    cursor.execute('SELECT * FROM producto WHERE codigo={0}'.format(codigo,))
+    producto = cursor.fetchone()
+    
+    # Verifica si el producto existe
+    if producto is not None:
+        # Verifica si la imagen del producto existe
+        if os.path.exists('app/static/img/'+str(producto[2])):
+            os.unlink('app/static/img/'+str(producto[2]))
+        
+        # Ahora puedes eliminar el producto de la base de datos
+        cursor.execute('DELETE FROM producto WHERE codigo={0}'.format(codigo,))
+        mysql.connection.commit()
+    
     return redirect(url_for('administar'))
-
 
 
 if __name__ == '__main__':

@@ -41,7 +41,7 @@
             <thead>
                 <tr>
                     <th scope="col">producto</th>
-                    
+                    <th scope="col">imagen</th>
                     <th scope="col">precio</th>
                     <th scope="col">cantidad</th>
                     <th scope="col">acciones</th>
@@ -53,7 +53,19 @@
                 <tr>
 
                     <td> {{  producto[1] }} </td>
-                    
+                    <td> 
+                        <img
+                        width="50"
+                            src="img/{{producto[2]}}"
+                            class="img-fluid rounded-top"
+                            alt=""
+                        />
+                        
+                        
+
+
+
+                    </td>
                     <td> {{producto[3] }} </td>
                     <td> {{producto[4]}} </td>
                     <td>

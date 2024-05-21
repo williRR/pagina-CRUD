@@ -1,6 +1,6 @@
 {%include 'admin/cabecera.html'%}
 
-<form action="/update/{{producto[0]}}" method="POST">
+<form action="/update/{{producto[0]}}" method="POST" enctype="multipart/form-data">
       
     <div class="mb-3">
         <label for="" class="form-label">Codigo </label>
@@ -32,7 +32,7 @@
     
     
     <!-- IMAGEN PRODUCTO  -->
-    <!-- <div class="mb-3">
+ <div class="mb-3">
         <label for="" class="form-label">Imagen</label>
         <input
             type="file"
@@ -41,7 +41,7 @@
             id="imagen"
             value="{{producto[2]}}"
         />
-    </div> -->
+    </div>
     
     
     <!-- PRECIO  -->
