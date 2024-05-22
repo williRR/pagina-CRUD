@@ -20,7 +20,13 @@ app.secret_key = 'mysecretkey'
 # MENU CON EL CATALOGO DE PRODUCTOS
 @app.route('/')
 def index():
-    return render_template ('admin/menu.html')
+    cursor=mysql.connection.cursor()
+    cursor.execute('USE tienda')
+    cursor.execute('SELECT * FROM producto')
+    productos=cursor.fetchall()
+    mysql.connection.commit()
+    
+    return render_template ('admin/menu.html',productos=productos)
 
 
 # PAGINA PARA ADMINISTRADORES DE PRODUCTOS
