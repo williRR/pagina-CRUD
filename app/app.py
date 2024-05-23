@@ -163,5 +163,19 @@ def eliminar(codigo):
     return redirect(url_for('administar'))
 
 
+# mostrando la descripcion del producto
+@app.route('/descripcion/<codigo>',methods=['GET'])
+def descripcion(codigo):
+    
+    # #creando conexion a base de datos
+    cursor=mysql.connection.cursor() 
+    cursor.execute('USE tienda')
+    
+    cursor.execute('SELECT * FROM producto WHERE codigo={0}'.format(codigo))
+    datos=cursor.fetchall()
+    
+    mysql.connection.commit()
+    return render_template('admin/descripcionP.html',producto=datos[0])
+
 if __name__ == '__main__':
     app.run(debug=True)
