@@ -52,7 +52,8 @@ def agregar_p():
         producto=request.form['producto']
         imagen=request.files['imagen']
         precio=request.form['precio']
-        cantidad=request.form['cantidad']  
+        cantidad=request.form['cantidad'] 
+        descripcion=request.form['descripcion']
         
         tiempo=datetime.now()
         horaActual=tiempo.strftime('%Y%H%M%S')
@@ -65,8 +66,8 @@ def agregar_p():
         # creamos la conexion
         cursor=mysql.connection.cursor()
         # damos los valores a insertar
-        sql=('INSERT INTO producto (nombre,imagen,precio,cantidad) VALUES ( %s,%s,%s,%s);' )    
-        datos=(producto,nuevoNombre,precio,cantidad)  # Guarda el nombre de la imagen, no el objeto de archivo
+        sql=('INSERT INTO producto (nombre,imagen,precio,cantidad,descripcion) VALUES ( %s,%s,%s,%s,%s);' )    
+        datos=(producto,nuevoNombre,precio,cantidad,descripcion)  # Guarda el nombre de la imagen, no el objeto de archivo
         cursor.execute('USE tienda')
         cursor.execute(sql,datos)
         # realizamos la insercion
@@ -90,6 +91,7 @@ def editar(codigo):
     
     return render_template('admin/editar.html',producto=datos[0])
 
+import os
 
 @app.route('/update/<codigo>',methods=['POST'])
 def update(codigo):
@@ -98,36 +100,44 @@ def update(codigo):
         imagen=request.files['imagen']
         precio=request.form['precio']
         cantidad=request.form['cantidad']
-        
+        descripcion=request.form['descripcion']
         tiempo=datetime.now()
         horaActual=tiempo.strftime('%Y%H%M%S')
         nuevoNombre = None
 
+        cursor=mysql.connection.cursor()
+        cursor.execute('USE tienda')
+
+        # Obtén la imagen actual del producto
+        cursor.execute('SELECT imagen FROM producto WHERE codigo={0}'.format(codigo,))
+        imagen_actual = cursor.fetchone()[0]
+
         if imagen.filename != "":
             nuevoNombre=horaActual+"_"+imagen.filename
             imagen.save('app/static/img/'+nuevoNombre)
-        
-        #conexion a la base de datos
-        cursor=mysql.connection.cursor()  
-        
-        cursor.execute('USE tienda')
+
+            # Si se ha subido una nueva imagen, borra la imagen anterior
+            if imagen_actual is not None and os.path.exists('app/static/img/'+imagen_actual):
+                os.unlink('app/static/img/'+imagen_actual)
+        else:
+            # Si no se ha subido ninguna imagen, usa la imagen actual
+            nuevoNombre = imagen_actual
+
         sql=""" 
             UPDATE producto
             set 
             nombre=%s,
             imagen=%s,
             precio=%s,
-            cantidad=%s
+            cantidad=%s,
+            descripcion=%s
             WHERE codigo=%s
             """
-        datos=(producto,nuevoNombre,precio,cantidad, codigo)
+        datos=(producto,nuevoNombre,precio,cantidad,descripcion, codigo)
         cursor.execute(sql,datos)
         mysql.connection.commit()
-    flash('Producto actualizado correctamente')
-    return redirect(url_for('administar'))
-         
-        
-
+        flash('Producto actualizado correctamente')
+        return redirect(url_for('administar'))
 
 
 # ELIMINAR PRODUCTOS

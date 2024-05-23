@@ -4,9 +4,9 @@ CREATE TABLE `tienda`.`producto` (
   `imagen` VARCHAR(255) NOT NULL,
   `precio` DECIMAL(10,2) NOT NULL DEFAULT '0.01',
   `cantidad` INT NOT NULL,
+  `descripcion` VARCHAR(500) NOT NULL,  
   
   PRIMARY KEY (`codigo`)
 ) ENGINE = InnoDB;
-
 
 DROP TABLE producto;
