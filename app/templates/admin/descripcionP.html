@@ -27,10 +27,38 @@ Aquí está cómo puedes hacerlo: -->
             <h5 class="card-title">PRECIO</h5>
             <p class="card-text">Q {{producto[3]}}</p>
             <form>
+
+
+              <!-- AGREGAR CANTIDAD DE PRODUCTOS  -->
               <div class="form-group">
                 <label for="cantidad">Cantidad:</label>
-                <input type="number" class="form-control" id="cantidad" placeholder="Ingrese la cantidad">
+                <div class="container mt-5">
+                  <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+
+                          <button class="btn btn-outline-secondary" type="button" id="minus" onclick="minus()">-</button>
+                        </div>
+                        <input type="text" class="form-control text-center" id="cantidad" value="1" readonly>
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" id="plus" onclick="plus()">+</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
               </div>
+
+
+
+
+
+
+              
+
+              <!-- AGREGAR AL CARRITO  -->
               <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
             </form>
           </div>
@@ -38,5 +66,5 @@ Aquí está cómo puedes hacerlo: -->
       </div>
     </div>
   </div>
-
+  
 {%include 'admin/pie.html'%}
