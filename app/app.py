@@ -91,7 +91,7 @@ def editar(codigo):
     
     return render_template('admin/editar.html',producto=datos[0])
 
-import os
+# ACTUALIZAR PRODUCTOS
 
 @app.route('/update/<codigo>',methods=['POST'])
 def update(codigo):
@@ -101,6 +101,7 @@ def update(codigo):
         precio=request.form['precio']
         cantidad=request.form['cantidad']
         descripcion=request.form['descripcion']
+        
         tiempo=datetime.now()
         horaActual=tiempo.strftime('%Y%H%M%S')
         nuevoNombre = None

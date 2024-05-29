@@ -1,3 +1,6 @@
+CREATE DATABASE tienda;
+USE tienda;
+
 CREATE TABLE `tienda`.`producto` (
   `codigo` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(255) NOT NULL,
@@ -9,4 +12,33 @@ CREATE TABLE `tienda`.`producto` (
   PRIMARY KEY (`codigo`)
 ) ENGINE = InnoDB;
 
-DROP TABLE producto;
+
+
+-- CREANDO TABLAS PARA USUARIOS Y ROLES
+
+CREATE TABLE roles (
+    id_rol INT AUTO_INCREMENT,
+    descripcion VARCHAR(255),
+    PRIMARY KEY (id_rol)
+);
+CREATE TABLE usuarios (
+    codigoUsuario INT AUTO_INCREMENT,
+    correo VARCHAR(255),
+    password VARCHAR(255),
+    id_rol INT,
+    PRIMARY KEY (codigoUsuario),
+    CONSTRAINT fk_rol
+        FOREIGN KEY (id_rol)
+        REFERENCES roles(id_rol)
+);
+-- insertar los roles disponibles para este proyecto admin y user
+
+INSERT INTO roles (descripcion) VALUES ('admin');
+INSERT INTO roles (descripcion) VALUES ('user');
+
+
+
+
+
+-- borra la base de datos 
+--DROP TABLE producto;
