@@ -1,11 +1,38 @@
-body{
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Esto asegura que la barra de navegación esté siempre en la parte superior de otros elementos */
+}
 
-    background-color: #2182e3;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body {
+    padding-top: 60px; /* Esto es para evitar que el contenido de la página se oculte detrás de la barra de navegación. Debes ajustar este valor según la altura de tu barra de navegación */
+}
+
+/* El resto de tu CSS... */
+
+/* El resto de tu CSS... */
+
+/* El resto de tu CSS... */
+
+
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-signin .form-control {
+    height: 35px;
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+.form-signin img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px; /* Aumenta este valor para hacer la imagen más grande */
 }

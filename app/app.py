@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request,url_for,redirect,flash,send_from_directory
 from flask_mysqldb import MySQL
 from datetime import datetime
+#importando mi archivo de configuracion para login
+from config import config
 import os
 
 app = Flask(__name__)
@@ -178,5 +180,20 @@ def descripcion(codigo):
     mysql.connection.commit()
     return render_template('admin/descripcionP.html',producto=datos[0])
 
+#
+@app.route('/')
+def loginP():
+    return redirect(url_for('login'))
+# LOGIN PAGUINA PRINCIPAL   
+@app.route('/login', methods=['GET','POST'])
+def login():
+    if request.method=='POST':
+        print(request.form['username'])
+        return render_template('admin/login.html')
+    else:
+        return render_template('admin/login.html')
+
 if __name__ == '__main__':
+    
+    app.config.from_object(config['development'])
     app.run(debug=True)
