@@ -36,6 +36,13 @@ CREATE TABLE usuarios (
 INSERT INTO roles (descripcion) VALUES ('admin');
 INSERT INTO roles (descripcion) VALUES ('user');
 
+-- Insertar registros para clientes 
+INSERT INTO usuarios (correo, password, id_rol) VALUES ('usuario1@example.com', 'contraseña1', 1);
+INSERT INTO usuarios (correo, password, id_rol) VALUES ('usuario2@example.com', 'contraseña2', 1);
+INSERT INTO usuarios (correo, password, id_rol) VALUES ('usuario3@example.com', 'contraseña3', 1);
+
+-- insertar registros para administrador 
+INSERT INTO usuarios (correo, password, id_rol) VALUES ('admin@example.com', 'contraseña11', 2);
 
 
 

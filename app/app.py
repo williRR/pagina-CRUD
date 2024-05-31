@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request,url_for,redirect,flash,send_from_directory
+from flask import Flask, render_template, request,url_for,redirect,flash,send_from_directory,session,Response
 from flask_mysqldb import MySQL
 from datetime import datetime
 #importando mi archivo de configuracion para login
 from config import config
 import os
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder='templates')
 
 #CONEXION A LA BASE DE DATOS    
 app.config['MYSQL_HOST'] = 'localhost'
@@ -180,18 +180,30 @@ def descripcion(codigo):
     mysql.connection.commit()
     return render_template('admin/descripcionP.html',producto=datos[0])
 
-#
-@app.route('/')
-def loginP():
-    return redirect(url_for('login'))
+
+
 # LOGIN PAGUINA PRINCIPAL   
 @app.route('/login', methods=['GET','POST'])
 def login():
-    if request.method=='POST':
-        print(request.form['username'])
-        return render_template('admin/login.html')
+    if request.method=='POST' and 'correo' in request.form and 'password' :
+        correo = request.form['correo']
+        password = request.form['password']
+        
+        cursor=mysql.connection.cursor()
+        cursor.execute('USE tienda')
+        cursor.execute('SELECT * FROM usuarios WHERE correo=%s AND password=%s',(correo,password,))
+        account=cursor.fetchone()
+        
+        if account:
+            # Si se encuentra un usuario, redirige a la página de menú
+            return redirect(url_for('index'))
+        else:
+            # Si no se encuentra un usuario, redirige a la página de inicio de sesión con un mensaje de error
+            return render_template('admin/login.html', error='Invalid credentials')
     else:
+        # Si la solicitud no es un POST o los campos necesarios no están en el formulario, redirige a la página de inicio de sesión
         return render_template('admin/login.html')
+   
 
 if __name__ == '__main__':
     
