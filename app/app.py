@@ -181,8 +181,6 @@ def descripcion(codigo):
     return render_template('admin/descripcionP.html',producto=datos[0])
 
 
-
-# LOGIN PAGUINA PRINCIPAL   
 @app.route('/login', methods=['GET','POST'])
 def login():
     if request.method=='POST' and 'correo' in request.form and 'password' :
@@ -196,14 +194,16 @@ def login():
         
         if account:
             # Si se encuentra un usuario, redirige a la página de menú
-            return redirect(url_for('index'))
+            if account[3] ==1:
+                return redirect(url_for('index'))
+            elif account[3] ==2:
+                return redirect(url_for('administar'))
         else:
             # Si no se encuentra un usuario, redirige a la página de inicio de sesión con un mensaje de error
             return render_template('admin/login.html', error='Invalid credentials')
     else:
         # Si la solicitud no es un POST o los campos necesarios no están en el formulario, redirige a la página de inicio de sesión
         return render_template('admin/login.html')
-   
 
 if __name__ == '__main__':
     
