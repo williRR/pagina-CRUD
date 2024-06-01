@@ -204,6 +204,15 @@ def login():
     else:
         # Si la solicitud no es un POST o los campos necesarios no están en el formulario, redirige a la página de inicio de sesión
         return render_template('admin/login.html')
+    
+    
+@app.route('/contactenos')
+def contactenos():
+   
+    return render_template('admin/contactenos.html')
+
+    
+
 
 if __name__ == '__main__':
     
