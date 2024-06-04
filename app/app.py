@@ -2,7 +2,7 @@ from flask import Flask, render_template, request,url_for,redirect,flash,send_fr
 from flask_mysqldb import MySQL
 from datetime import datetime
 #importando mi archivo de configuracion para login
-from config import config
+
 import os
 
 app = Flask(__name__,template_folder='templates')
@@ -42,7 +42,7 @@ def login():
                 return redirect(url_for('administar'))
         else:
             # Si no se encuentra un usuario, redirige a la página de inicio de sesión con un mensaje de error
-            return render_template('admin/login.html', error='Invalid credentials')
+            return render_template('admin/login.html', error='Correo o contraseña incorrectos')
     else:
         # Si la solicitud no es un POST o los campos necesarios no están en el formulario, redirige a la página de inicio de sesión
         return render_template('admin/login.html')
@@ -222,11 +222,11 @@ def compra(codigo):
     cursor.execute('USE tienda')
     cursor.execute('SELECT * FROM producto WHERE codigo={0}'.format(codigo))
     datos=cursor.fetchall()
-    
+   
 
     mysql.connection.commit()
-    cantidad = request.args.get('cantidad')
-    return render_template('admin/compra.html',producto=datos[0],cantidad=cantidad)
+    
+    return render_template('admin/compra.html',producto=datos[0])
     
     
 @app.route('/contactenos')
@@ -237,5 +237,5 @@ def contactenos():
 
 if __name__ == '__main__':
     
-    app.config.from_object(config['development'])
+    
     app.run(debug=True)
