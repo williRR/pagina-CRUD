@@ -18,4 +18,6 @@ let minusBtn = document.getElementById('minus');
 
   minusBtn.addEventListener('click', minus);
   plusBtn.addEventListener('click', plus);
+
+  
   

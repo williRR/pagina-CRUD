@@ -178,8 +178,27 @@ def descripcion(codigo):
     datos=cursor.fetchall()
     
     mysql.connection.commit()
-    return render_template('admin/descripcionP.html',producto=datos[0])
+    
+    cantidad = request.args.get('cantidad')
+    return render_template('admin/descripcionP.html',producto=datos[0],cantidad=cantidad)
 
+#paguina de compra del producto
+@app.route('/descripcion/comprar/<codigo>',methods=['GET'])
+def compra(codigo):
+    cursor=mysql.connection.cursor() 
+    cursor.execute('USE tienda')
+    cursor.execute('SELECT * FROM producto WHERE codigo={0}'.format(codigo))
+    datos=cursor.fetchall()
+    
+
+    mysql.connection.commit()
+    cantidad = request.args.get('cantidad')
+    return render_template('admin/compra.html',producto=datos[0],cantidad=cantidad)
+    
+@app.route('/contactenos')
+def contactenos():
+   
+    return render_template('admin/contactenos.html')
 
 @app.route('/login', methods=['GET','POST'])
 def login():
@@ -206,10 +225,7 @@ def login():
         return render_template('admin/login.html')
     
     
-@app.route('/contactenos')
-def contactenos():
-   
-    return render_template('admin/contactenos.html')
+
 
     
 
