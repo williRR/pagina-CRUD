@@ -20,4 +20,5 @@ let minusBtn = document.getElementById('minus');
   plusBtn.addEventListener('click', plus);
 
   
-  
+  var link = document.getElementById('linkToOtherPage');
+  link.href = "/otra_pagina.html?cantidad=" + cantidad;

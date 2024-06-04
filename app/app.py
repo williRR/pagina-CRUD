@@ -19,8 +19,41 @@ mysql = MySQL(app)
 app.secret_key = 'mysecretkey'
 
 
-# MENU CON EL CATALOGO DE PRODUCTOS
 @app.route('/')
+def home():
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    if request.method=='POST' and 'correo' in request.form and 'password' :
+        correo = request.form['correo']
+        password = request.form['password']
+        
+        cursor=mysql.connection.cursor()
+        cursor.execute('USE tienda')
+        cursor.execute('SELECT * FROM usuarios WHERE correo=%s AND password=%s',(correo,password,))
+        account=cursor.fetchone()
+        
+        if account:
+            # Si se encuentra un usuario, redirige a la página de menú
+            if account[3] ==1:
+                return redirect(url_for('index'))
+            elif account[3] ==2:
+                return redirect(url_for('administar'))
+        else:
+            # Si no se encuentra un usuario, redirige a la página de inicio de sesión con un mensaje de error
+            return render_template('admin/login.html', error='Invalid credentials')
+    else:
+        # Si la solicitud no es un POST o los campos necesarios no están en el formulario, redirige a la página de inicio de sesión
+        return render_template('admin/login.html')
+    
+
+
+
+    
+
+# MENU CON EL CATALOGO DE PRODUCTOS
+@app.route('/menu')
 def index():
     cursor=mysql.connection.cursor()
     cursor.execute('USE tienda')
@@ -200,35 +233,6 @@ def compra(codigo):
 def contactenos():
    
     return render_template('admin/contactenos.html')
-
-@app.route('/login', methods=['GET','POST'])
-def login():
-    if request.method=='POST' and 'correo' in request.form and 'password' :
-        correo = request.form['correo']
-        password = request.form['password']
-        
-        cursor=mysql.connection.cursor()
-        cursor.execute('USE tienda')
-        cursor.execute('SELECT * FROM usuarios WHERE correo=%s AND password=%s',(correo,password,))
-        account=cursor.fetchone()
-        
-        if account:
-            # Si se encuentra un usuario, redirige a la página de menú
-            if account[3] ==1:
-                return redirect(url_for('index'))
-            elif account[3] ==2:
-                return redirect(url_for('administar'))
-        else:
-            # Si no se encuentra un usuario, redirige a la página de inicio de sesión con un mensaje de error
-            return render_template('admin/login.html', error='Invalid credentials')
-    else:
-        # Si la solicitud no es un POST o los campos necesarios no están en el formulario, redirige a la página de inicio de sesión
-        return render_template('admin/login.html')
-    
-    
-
-
-    
 
 
 if __name__ == '__main__':
