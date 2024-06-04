@@ -195,6 +195,7 @@ def compra(codigo):
     cantidad = request.args.get('cantidad')
     return render_template('admin/compra.html',producto=datos[0],cantidad=cantidad)
     
+    
 @app.route('/contactenos')
 def contactenos():
    

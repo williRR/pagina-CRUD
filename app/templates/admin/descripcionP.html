@@ -42,7 +42,7 @@ Aquí está cómo puedes hacerlo: -->
         <div class="input-group-prepend">
           <button class="btn btn-outline-secondary" type="button" id="minus">-</button>
         </div>
-        <input type="text" class="form-control text-center" id="cantidad" value="1" readonly>
+        <input type="text" class="form-control text-center" id="cantidad" name="cantidad" value="1" readonly>
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="button" id="plus">+</button>
         </div>
@@ -65,5 +65,16 @@ Aquí está cómo puedes hacerlo: -->
       </div>
     </div>
   </div>
+  <script>
+    // Asegúrate de que estás actualizando el campo oculto 'cantidad' con la cantidad seleccionada
+    document.getElementById('plus').addEventListener('click', function() {
+      var cantidad = document.getElementById('cantidad');
+      cantidad.value = parseInt(cantidad.value) + 1;
+    });
   
+    document.getElementById('minus').addEventListener('click', function() {
+      var cantidad = document.getElementById('cantidad');
+      cantidad.value = Math.max(1, parseInt(cantidad.value) - 1);
+    });
+  </script>
 {%include 'admin/pie.html'%}
