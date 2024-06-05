@@ -1,18 +1,23 @@
 {%include 'admin/cabecera.html'%}
 
 
-
-
-
-<div class="container mt-5">
+<div class="mountain-bg">
+  <div class="container mt-5">
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <h1 class="text-center mb-4">¡Bienvenido!</h1>
-        <p class="text-center">Esta es una página simple de presentación utilizando HTML y Bootstrap.</p>
+        <h1 class=" mb-4">¡Bienvenido a BIKE ZONE!</h1>
+        <p class="text-center">Explora nuestras últimas bicicletas y encuentra la perfecta para ti</p>
         <p class="text-center">¡Espero que te guste!</p>
       </div>
     </div>
-</div>
+  </div>
+</div> 
+
+
+
+
+
+
 
 
 
@@ -27,6 +32,8 @@
 
 
     <div class="row mt-5">
+
+      <h1 class="text-center">Catálogo de bicicletas</h1>
       {% for producto in productos %}
       <div class="col-md-3">
         <div class="card">
@@ -42,6 +49,15 @@
       </div>
       {% endfor %}
     </div>
+
+  <div class="row mt-5">
+      <div class="col-md-12">
+          <h1 class="custom-text">¿Qué es Bike Zone?</h1>
+          <p class="custom-text">Bike Zone es una tienda de bicicletas en la que podrás encontrar una gran variedad de bicicletas de diferentes estilos y precios. ¡Esperamos que encuentres la bicicleta perfecta para ti!</p>
+          <button class="btn-contactenos" onclick="location.href='/contactenos'">Contáctenos</button>
+      </div>
+  </div>
+
 
 
 
