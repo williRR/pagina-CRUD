@@ -22,3 +22,15 @@ let minusBtn = document.getElementById('minus');
   
   var link = document.getElementById('linkToOtherPage');
   link.href = "/otra_pagina.html?cantidad=" + cantidad;
+
+  let alertMsg = document.getElementById('eliminar');
+
+  function eliminar() {
+    var confirmacion = confirm("¿Estás seguro de que quieres eliminar este producto?");
+    if (confirmacion) {
+        // Aquí va el código para eliminar el producto si el usuario confirma
+    } else {
+        // Aquí va el código para cancelar la eliminación si el usuario no confirma
+        event.preventDefault();
+    }
+}
